@@ -1,0 +1,134 @@
+<DOCTYPE!html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<% include ./partials/header %>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+</style>
+</head>
+<body>
+
+<h2>Blogs</h2>
+<br>
+
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="/w3images/team1.jpg" style="width:100% height:50%">
+      <div class="container">
+        <h2>Pain is Imaginary</h2>
+        <p>Pain looks bad. It stops, hurt and divert you from your goal. It makes you think that it is powerful and you should surrender, else you will be crushed. Now you have to decide whether you want to let this thought drown you in the sea of weakness and dullness or you want to face it and walk towards the path of success with satisfaction
+
+Pain, embarrassment, defeat, failure and rejections are beautiful things that remind us, we are mortal, nothing is easy and we need to put effort. Focus to work, pray, struggle and fight to achieve your dreams.
+Don’t let the success halt your efforts or the failure stop you. You all are lions and lionesses and are only meant to rule and roar. Your dreams are far more important than your excuses and weaknesses. Think you can make a difference and believe me you can.
+
+Every single breath you take is about living a life of a humblest legend not for procrastinating your time for hardwork and achieving greatness for tomorrow. You deserve more than what you have. You all are legends. Working and living for others need bravery and courage which not everyone have. When you live for others, by default you become better than others. You don’t need any certificate or degree to define you and your skills. You don’t need to even tell about inner beauty as you will illuminate more and more lives with your small gestures and daily actions.
+
+Believe in yourself. Pick a hobby, work on your goals, laugh loudly, accept mistakes, cry, save relationships, avoid bad language, breathe, make friends, take risk, do bizzare things and serve.
+You dont need people’s approval for your goals. You are a legend. I respect and salute you as God just created you so beautifully. Just say to yourself, till death my love will last for me. With this thought raise, soar and fly. Nothing is impossible by a determined and focused mind.
+
+This winter lets redefine our organisations, lives and relationships. Let’s show ourselves what we are made of. Let’s achieve something which we haven’t till date. I need you to do this to make world a better place. Do this for your organisations, for your lives and for making an impact.
+
+Small advice, please start living.
+~Your Fan,
+AB
+
+Your valuable feedback is important. Will thank you for the likes, comments and shares.
+
+For mentoring, life coach and daily motivation needs, write in contact section. Will get back to you.
+
+My love is for you till eternity.</p>
+        <p><button href= "/id"class="button">View More</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="/w3images/team2.jpg" style="width:100% height:50%">
+      <div class="container">
+        <h2>Blog 2</h2>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p><button class="button">View More</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="/w3images/team3.jpg" style="width:100% height:50%">
+      <div class="container">
+        <h2>Blog 3</h2>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p><button class="button">View More</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ./partials/footer %>
+</body>
+</html>

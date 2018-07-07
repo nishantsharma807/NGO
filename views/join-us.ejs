@@ -1,0 +1,56 @@
+<% include ./partials/header %>
+<h2 align = "center"> Be the Change- Join Us</h2>
+<div class="modal-body row">
+  <div class="col-md-6">
+ <h3>Donor</h3>
+      <p>Every single penny is important. If you feel inspired by our work then
+        help us in carrying it among more and more people by supporting us
+        with your contributions. To know more write to us through our query
+        form on “Contact Us” page or drop us an email on</p>
+        <form method="POST" action="mailto:imperfectngo@gmail.com?Subject=Imperfecto%20Website">
+        <button type="submit" align="center" class="btn btn-primary btn-lg">
+            imperfectngo@gmail.com</button>
+        </form>
+  </div>
+  <div class="col-md-6">
+      <h3>Volunteer</h3>
+      <p>Beautiful ideas come from inspired people. Join us in our projects and make an impact
+        in someone life. Your every act of courage will touch a life. Be a savior; be a change.</p>
+       <h5>Who can serve perfectly(JOIN US)</h5>
+         <ul style="list-style-type:circle">
+              <li>If you consider serving the society as synonymous to living</li>
+              <li>If you are willing to serve without constrains of time, place and conditions</li>
+              <li>If you are having the will to serve the society selflessly</li>
+        </ul> <p align = "right"> ... then join us</p>
+    <form>
+      <div class="form-group">
+        <label for="exampleFormName">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormGender">Gender</label>
+        <select name="Gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormName">Email ID</label>
+        <input type="email" class="form-control" id="email" placeholder="abc@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormPhone">Phone Number</label>
+        <input type="tel" class="form-control" id="phonenumber" placeholder="1234567890">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Comments/Feedback/Query</label>
+        <textarea class="form-control" id="textarea" rows="3"></textarea>
+      </div>
+      
+      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+</form>
+  </div>
+</div>
+
+<% include ./partials/footer %>

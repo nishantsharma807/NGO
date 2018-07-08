@@ -14,7 +14,11 @@
         <% projects.forEach(function(item){ %>
             <div class="col-md-3 col-sm-6">
                 <div id="productThumbnail" class="thumbnail">
-                   <img id="displayProductImage" class="img-thumbnail" src="/project_images/<%= item._id %>/<%= item.image %>">
+                   <% if(!item.image) { %>
+                    <img id="displayProductImage" class="img-thumbnail" id="noimage" src="/project_images/noimage.png">
+                   <% } else {%>
+                    <img id="displayProductImage" class="img-thumbnail" src="/project_images/<%= item._id %>/<%= item.image %>">
+                   <% }%>
                    <div class="caption">
                        <h4><%= item.name %></h4>
                    </div>

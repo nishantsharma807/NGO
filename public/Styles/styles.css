@@ -1,8 +1,21 @@
-#displayProductImage{
+#displayImages{
     height: 350px;
     width: 350px;
     margin-bottom: 15px;
 }
-#productThumbnail{
+#displayThumbnails{
     height: 550px;
+}
+#memberThumbnail{
+    height: 100%;
+}
+#displayMemberImage{
+    margin-bottom: 12px;
+    height: 300px;
+    width: 300px;
+}
+#footStyle{
+    margin-top: 3px;
+    margin-bottom: 0px;
+    margin-right: auto;
 }

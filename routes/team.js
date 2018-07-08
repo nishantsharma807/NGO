@@ -1,6 +1,7 @@
 var express     = require("express"),
-    Member        = require("../models/members"),
-    middleware  = require("../middleware");
+    Member      = require("../models/members"),
+    middleware  = require("../middleware"),
+    mkdirp      = require('mkdirp');
 
 var router  = express.Router();
 
@@ -26,9 +27,31 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
         id: req.user._id,
         username:  req.user.username
     };
-    var newMember = {name: name, title: title, description: desc, author: author};
+    var imageFile = imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
+    var newMember = new Member({
+        name: name,
+        title: title,
+        description: desc,
+        image: imageFile,
+        author: author});
     
-    Member.create(newMember);
+    newMember.save(function (err) {
+        if (err)
+            return console.log(err);
+
+        mkdirp('public/member_images/' + newMember._id, function (err) {
+            return console.log(err);
+        });
+
+        if (imageFile != "") {
+            var projectImage = req.files.image;
+            var path = 'public/member_images/' + newMember._id + '/' + imageFile;
+
+            projectImage.mv(path, function (err) {
+                return console.log(err);
+            });
+        }});
+    req.flash('success', 'Member added!');
     res.redirect("/team");
     
 });

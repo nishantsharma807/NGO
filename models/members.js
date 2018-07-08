@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
        name: String,
        title: String,
        description: String,
+       image: String,
        author: {
            id: {
                type: mongoose.Schema.Types.ObjectId,

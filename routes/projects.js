@@ -1,7 +1,7 @@
 var express         = require("express"),
     mkdirp          = require('mkdirp'),
     fs              = require('fs-extra'),
-    fileUpload      = require('express-fileupload'),
+    resizeImg       = require('resize-img'),
     Projects        = require("../models/projects"),
     middleware      = require("../middleware");
 

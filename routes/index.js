@@ -42,7 +42,7 @@ router.get("/login", function(req, res) {
 // LOGIN POST ROUTE
 
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/blogs",
+    successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true,
     successFlash: 'Welcome to Imperfect!'

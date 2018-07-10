@@ -19,3 +19,13 @@
     margin-bottom: 0px;
     margin-right: auto;
 }
+ul.gallery li {
+    margin: 20px;
+    display: inline-block;
+    list-style: none;
+}
+
+#noimage {
+    width: 100px;
+    height: 100px;
+}

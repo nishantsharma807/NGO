@@ -3,21 +3,32 @@
     <div class="row">
         <h1 style="text-align: center">Edit <%= member.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/team/<%= member._id %>?_method=PUT" method="POST">
+            <form action="/team/<%= member._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="member[name]" value="<%= member.name %>">
+                    <input class="form-control" type="text" name="name" value="<%= member.name %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="member[title]" value="<%= member.title %>">
+                    <input class="form-control" type="text" name="title" value="<%= member.title %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="textarea" name="member[description]" value="<%= member.description %>">
+                    <input class="form-control" type="textarea" name="description" value="<%= member.description %>">
                 </div>
                 <div class="form-group">
-                    <label for="">Image</label>
-                    <input type="file" class="form-control" name="member[image]" id="img">
+                    <label for="">Current Image</label>
+                    <p>
+                        <% if (!member.image) { %>
+                            <img class="noimage" id="noimage" src="/member_images/noimage.png" alt="">
+                        <% } else {%>
+                            <img id="noimage" src="/member_images/<%= member._id %>/<%= member.image %>" alt="">
+                        <% } %>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="">Upload Image</label>
+                    <input type="file" class="form-control" name="image" id="img">
                     <img src="#" id="imgPreview" alt="">
                 </div>
+                <input type="hidden" name="memberImage" value="<%= member.image %>">
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>

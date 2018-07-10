@@ -1,7 +1,8 @@
 var express     = require("express"),
     Member      = require("../models/members"),
     middleware  = require("../middleware"),
-    mkdirp      = require('mkdirp');
+    mkdirp      = require('mkdirp'),
+    fs          = require('fs-extra');
 
 var router  = express.Router();
 
@@ -89,13 +90,53 @@ router.get("/:id/edit", middleware.checkMemberOwnership, function(req, res) {
 // PUT REQUEST FOR UPDATING FORM
 
 router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
-    Member.findByIdAndUpdate(req.params.id, req.body.member, function(err, updatedMember){
+    var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
+    
+    var name = req.body.name;
+    var desc = req.body.description;
+    var title = req.body.title;
+    var memberImage = req.body.memberImage;
+    
+    Member.findById(req.params.id, function(err, updatedMember){
+        
         if(err){
             req.flash("error", err.message);
-            res.redirect("/team");
+            res.redirect("/projects");
         } else{
+            
+            updatedMember.name = name;
+            updatedMember.description = desc;
+            updatedMember.title = title;
+            
+            
+            if (imageFile) {
+                updatedMember.image = imageFile;
+            }
+            updatedMember.save(function (err){
+                if(err){
+                    console.log(err);
+                }
+                
+                if (imageFile) {
+                    if (memberImage) {
+                        fs.remove('public/member_images/' +req.params.id + '/' + memberImage, function (err) {
+                        if (err)
+                            console.log(err);
+                    });
+                }
+
+                var memImage = req.files.image;
+                var path = 'public/member_images/' + req.params.id + '/' + imageFile;
+                updatedMember.image = memImage;
+                memImage.mv(path, function (err) {
+                    return console.log(err);
+                });
+            }    
             req.flash("success","Successfully Updated!");
             res.redirect("/team");
+        
+            });
+            
         }
     });
 });

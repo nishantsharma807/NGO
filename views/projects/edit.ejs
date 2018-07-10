@@ -3,16 +3,32 @@
     <div class="row">
         <h1 style="text-align: center">Edit <%= project.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/projects/<%= project._id %>?_method=PUT" method="POST">
+            <form action="/projects/<%= project._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="project[name]" value="<%= project.name %>">
+                    <input class="form-control" type="text" name="name" value="<%= project.name %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="project[duration]" value="<%= project.duration %>">
+                    <input class="form-control" type="text" name="duration" value="<%= project.duration %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="textarea" name="project[description]" value="<%= project.description %>">
+                    <input class="form-control" type="textarea" name="description" value="<%= project.description %>">
                 </div>
+                <div class="form-group">
+                    <label for="">Current Image</label>
+                    <p>
+                        <% if (!project.image) { %>
+                            <img class="noimage" id="noimage" src="/project_images/noimage.png" alt="">
+                        <% } else {%>
+                            <img id="noimage" src="/project_images/<%= project._id %>/<%= project.image %>" alt="">
+                        <% } %>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="">Upload Image</label>
+                    <input type="file" class="form-control" name="image" id="img">
+                    <img src="#" id="imgPreview" alt="">
+                </div>
+                <input type="hidden" name="pimage" value="<%= project.image %>">
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>
@@ -21,4 +37,62 @@
         </div>
     </div>
 </div>
+<hr>
+<h3 class="page-header">Gallery</h3>
+
+<ul class="gallery">
+    <% galleryImages.forEach(function(image){ %>
+    <% if (project.image != "thumbs") { %>
+    <li>
+        <img src="/project_images/<%= project._id %>/gallery/thumbs/<%= image %>" alt="">&nbsp;
+        <a class="confirmDeletion" href="/projects/delete-image/<%= image %>?id=<%= project._id %>">
+        <button class="btn btn-danger">Delete</button></a>
+    </li>
+    <% } %>
+    <% }); %>
+</ul>
+
+<br><br>
+<form action="/projects/<%= project._id %>/gallery" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+    <div class="fallback">
+        <input type="file" name="file" multiple>
+        <input type="submit" value="Upload">
+    </div>
+</form>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/basic.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.js"></script>
+<script>
+    
+    // Preview image
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#img").change(function() {
+        readURL(this);
+    });
+    
+    // Dropzone
+    Dropzone.options.dropzoneForm = {
+        acceptedFiles: "image/*",
+        init: function() {
+            this.on("queuecomplete", function(file) {
+               setTimeout(function() {
+                location.reload()
+                }, 1000); 
+            });
+        }
+    }
+    
+</script>
 <% include ../partials/footer %>

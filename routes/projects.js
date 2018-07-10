@@ -154,7 +154,6 @@ router.put("/:id", middleware.checkProjectOwnership ,function(req, res){
     var desc = req.body.description;
     var duration = req.body.duration;
     var pimage = req.body.pimage;
-    var id = req.params.id;
     
     Projects.findById(req.params.id, function(err, updatedProject){
         

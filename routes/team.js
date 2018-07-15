@@ -63,22 +63,6 @@ router.get("/new", middleware.isLoggedIn ,function(req, res){
     res.render("team/new");
 });
 
-// SHOW PARTICULAR CAMPGROUND
-
-// router.get("/:id", function(req, res){
-    
-//     Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog){
-//         if(err){
-//             console.log(err);
-//             req.flash('error', 'Sorry, that blog does not exist!');
-//         }            
-//         else{
-//             res.render("blogs/show", {blog: foundBlog}); 
-//         }
-//     });
-   
-// });
-
 // EDIT CAMPGROUND FORM
 
 router.get("/:id/edit", middleware.checkMemberOwnership, function(req, res) {
@@ -101,13 +85,11 @@ router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
         
         if(err){
             req.flash("error", err.message);
-            res.redirect("/projects");
-        } else{
-            
+            res.redirect("/blogs");
+        } else {
             updatedMember.name = name;
             updatedMember.description = desc;
             updatedMember.title = title;
-            
             
             if (imageFile) {
                 updatedMember.image = imageFile;

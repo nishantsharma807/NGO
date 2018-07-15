@@ -13,8 +13,12 @@
      <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% blogs.forEach(function(item){ %>
             <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <img src="<%= item.image %>">
+                <div id="displayThumbnails" class="thumbnail">
+                   <% if(!item.image) { %>
+                    <img id="displayImages" class="img-thumbnail" id="noimage" src="/blog_images/noimage.png">
+                   <% } else {%>
+                    <img id="displayImages" class="img-thumbnail" src="/blog_images/<%= item._id %>/<%= item.image %>">
+                   <% }%>
                    <div class="caption">
                        <h4><%= item.name %></h4>
                    </div>

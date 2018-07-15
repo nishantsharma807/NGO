@@ -78,15 +78,25 @@ router.get("/new", middleware.isLoggedIn ,function(req, res){
 // SHOW PARTICULAR CAMPGROUND
 
 router.get("/:id", function(req, res){
-    
     Projects.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
             req.flash('error', 'Sorry, that Project does not exist!');
         }            
         else{
-            res.render("projects/show", {project: foundProject}); 
-        }
+            var galleryDir = 'public/project_images/' + foundProject._id + '/gallery';
+            var galleryImages = null;
+
+            fs.readdir(galleryDir, function (err, files) {
+                if (err) {
+                    console.log(err);
+                    res.redirect('back');
+                } else {
+                    galleryImages = files;
+                    res.render("projects/show", {project: foundProject, galleryImages: galleryImages}); 
+                }
+            });
+        }    
     });
    
 });
@@ -138,12 +148,6 @@ router.post('/:id/gallery', function (req, res) {
 
 });
 
-//Add Images Form
-router.get("/:id/addImages", middleware.checkProjectOwnership, function(req, res) {
-    Projects.findById(req.params.id, function(err, foundProject){
-            res.render("projects/addImages", {project: foundProject});
-    });
-});
 
 // PUT REQUEST FOR UPDATING FORM
 

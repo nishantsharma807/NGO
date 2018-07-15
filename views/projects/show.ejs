@@ -11,6 +11,7 @@
         </div> -->
         <div class="col-md-3">
             <div class="thumbnail">
+                <img class="img-responsive" src="/project_images/<%= project._id %>/<%= project.image %>">
                 <div class="caption-full">
                     <h4><a><%=project.name%></a></h4>
                     <p><%= project.description %></p>
@@ -22,9 +23,22 @@
                         <form class="delete-form" action="/projects/<%= project._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
                         </form>
-                        <a class="btn btn-info" href="/projects/<%= project._id %>/addImages">Add Images</a>    
-                    <% }%>
+                        <% }%>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+           <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+                <% galleryImages.forEach(function(image){ %>
+                <% if (image != "thumbs") { %>
+                <div class="col-md-3 col-sm-6">
+                    <div  id="memberThumbnail" class="thumbnail">
+                        <a data-fancybox="gallery" href="/project_images/<%= project._id %>/gallery/<%= image %>">
+                        <img src="/project_images/<%= project._id %>/gallery/<%= image %>" alt="">
+                    </div>
+                </div>
+                <% } %>
+                <% }); %>
             </div>
         </div>
     </div>

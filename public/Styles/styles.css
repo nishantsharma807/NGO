@@ -8,6 +8,7 @@
 }
 #memberThumbnail{
     height: 100%;
+    display: inline-block;
 }
 #displayMemberImage{
     margin-bottom: 12px;

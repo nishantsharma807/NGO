@@ -6,7 +6,7 @@ var express     = require("express"),
 
 var router  = express.Router();
 
-// ALL CAMPGROUNDS ROUTE
+// ALL Team Members
 
 router.get("/", function(req, res){
     Member.find({}, function(err, members){
@@ -18,7 +18,7 @@ router.get("/", function(req, res){
     });
 });
 
-// POST CAMPGROUND ROUTE
+// POST a New Team Member
 
 router.post("/", middleware.isLoggedIn ,function(req, res){
     var name = req.body.name;
@@ -57,21 +57,25 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
     
 });
 
-// NEW CAMPGROUND FORM
+// NEW Team Member Form
 
 router.get("/new", middleware.isLoggedIn ,function(req, res){
     res.render("team/new");
 });
 
-// EDIT CAMPGROUND FORM
+// EDIT a Team Member Form
 
 router.get("/:id/edit", middleware.checkMemberOwnership, function(req, res) {
     Member.findById(req.params.id, function(err, foundMember){
-            res.render("team/edit", {member: foundMember});
+        if(err){
+            req.flash("error", err);
+            res.redirect("/team");
+        }
+        res.render("team/edit", {member: foundMember});
     });
 });
 
-// PUT REQUEST FOR UPDATING FORM
+// PUT Request for Updating a Team Member
 
 router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
@@ -123,19 +127,26 @@ router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
     });
 });
 
-// REMOVE CAMPGROUND
+//DELETE a Team Member
 
-router.delete("/:id", middleware.checkMemberOwnership, function(req, res){
-    Member.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            req.flash('error', err.message);
-            res.redirect("/team");
-        } else{
-            req.flash('error', 'Member deleted!');
-            res.redirect("/team");
+router.delete('/delete-member/:id', function (req, res) {
+
+    var id = req.params.id;
+    var path = 'public/member_images/' + id;
+
+    fs.remove(path, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            Member.findByIdAndRemove(id, function (err) {
+                console.log(err);
+            });
+            
+            req.flash('success', 'Member deleted!');
+            res.redirect('/team');
         }
     });
-});
 
+});
 
 module.exports = router;

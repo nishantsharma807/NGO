@@ -6,7 +6,7 @@ var express     = require("express"),
 
 var router  = express.Router();
 
-// ALL CAMPGROUNDS ROUTE
+// All Blogs Route
 
 router.get("/", function(req, res){
     Blog.find({}, function(err, allBlogs){
@@ -18,7 +18,7 @@ router.get("/", function(req, res){
     });
 });
 
-// POST CAMPGROUND ROUTE
+// POST a New Blog Route
 
 router.post("/", middleware.isLoggedIn ,function(req, res){
     var name = req.body.name;
@@ -56,13 +56,13 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
     
 });
 
-// NEW CAMPGROUND FORM
+// NEW Blog Form
 
 router.get("/new", middleware.isLoggedIn ,function(req, res){
     res.render("blogs/new");
 });
 
-// SHOW PARTICULAR CAMPGROUND
+// SHOW a Particular Blog
 
 router.get("/:id", function(req, res){
     
@@ -78,7 +78,7 @@ router.get("/:id", function(req, res){
    
 });
 
-// EDIT CAMPGROUND FORM
+// EDIT Blog Form
 
 router.get("/:id/edit", middleware.checkBlogOwnership, function(req, res) {
     Blog.findById(req.params.id, function(err, foundBlog){
@@ -90,7 +90,7 @@ router.get("/:id/edit", middleware.checkBlogOwnership, function(req, res) {
     });
 });
 
-// PUT REQUEST FOR UPDATING FORM
+// PUT Request for Updating a Blog
 
 router.put("/:id", middleware.checkBlogOwnership ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
@@ -142,19 +142,25 @@ router.put("/:id", middleware.checkBlogOwnership ,function(req, res){
     });
 });
 
-// REMOVE CAMPGROUND
+// DELETE a Blog
 
-router.delete("/:id", middleware.checkBlogOwnership, function(req, res){
-    Blog.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            req.flash('error', err.message);
-            res.redirect("/blogs");
-        } else{
-            req.flash('error', 'Blog deleted!');
-            res.redirect("/blogs");
+router.delete('/delete-blog/:id', function (req, res) {
+    var id = req.params.id;
+    var path = 'public/blog_images/' + id;
+
+    fs.remove(path, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            Blog.findByIdAndRemove(id, function (err) {
+                console.log(err);
+            });
+            
+            req.flash('success', 'Blog deleted!');
+            res.redirect('/team');
         }
     });
-});
 
+});
 
 module.exports = router;

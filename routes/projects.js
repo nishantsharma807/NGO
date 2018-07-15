@@ -7,7 +7,7 @@ var express         = require("express"),
 
 var router  = express.Router();
 
-// ALL CAMPGROUNDS ROUTE
+// GET all Projects
 
 router.get("/", function(req, res){
     Projects.find({}, function(err, allProjects){
@@ -19,10 +19,9 @@ router.get("/", function(req, res){
     });
 });
 
-// POST CAMPGROUND ROUTE
+// POST Route for new Project
 
 router.post("/", middleware.isLoggedIn ,function(req, res){
-    
     var name = req.body.name;
     var duration = req.body.duration;
     var desc = req.body.description;
@@ -30,7 +29,6 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
         id: req.user._id,
         username:  req.user.username
     };
-    
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
     
     var newProject = new Projects({
@@ -40,7 +38,6 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
         author: author,
         image: imageFile});
         
-    //Projects.create(newProject);
     newProject.save(function (err) {
         if (err)
             return console.log(err);
@@ -69,13 +66,13 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
     res.redirect("/projects");
 });
 
-// NEW CAMPGROUND FORM
+// GET a New Project Form
 
 router.get("/new", middleware.isLoggedIn ,function(req, res){
     res.render("projects/new");
 });
 
-// SHOW PARTICULAR CAMPGROUND
+// GET a particular project
 
 router.get("/:id", function(req, res){
     Projects.findById(req.params.id, function(err, foundProject){
@@ -101,7 +98,7 @@ router.get("/:id", function(req, res){
    
 });
 
-// EDIT CAMPGROUND FORM
+// GET Edit Project Form
 
 router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
     Projects.findById(req.params.id, function(err, foundProject){
@@ -126,7 +123,7 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
     });
 
 /*
- * POST product gallery
+ * POST Route for Project Gallery Images
  */
 router.post('/:id/gallery', function (req, res) {
 
@@ -149,7 +146,7 @@ router.post('/:id/gallery', function (req, res) {
 });
 
 
-// PUT REQUEST FOR UPDATING FORM
+// PUT Request for Editing a Project
 
 router.put("/:id", middleware.checkProjectOwnership ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
@@ -204,7 +201,7 @@ router.put("/:id", middleware.checkProjectOwnership ,function(req, res){
 });
 
 /*
- * GET delete image
+ * DELETE Project Gallery Image
  */
 router.get('/delete-image/:image', function (req, res) {
 
@@ -227,19 +224,26 @@ router.get('/delete-image/:image', function (req, res) {
     });
 });
 
-// REMOVE CAMPGROUND
+// Delete Entire Project
 
-router.delete("/:id", middleware.checkProjectOwnership, function(req, res){
-    Projects.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            req.flash('error', err.message);
-            res.redirect("/projects");
-        } else{
-            req.flash('error', 'Project deleted!');
-            res.redirect("/projects");
+router.delete('/delete-project/:id', function (req, res) {
+
+    var id = req.params.id;
+    var path = 'public/project_images/' + id;
+
+    fs.remove(path, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            Projects.findByIdAndRemove(id, function (err) {
+                console.log(err);
+            });
+            
+            req.flash('success', 'Project deleted!');
+            res.redirect('/projects');
         }
     });
-});
 
+});
 
 module.exports = router;

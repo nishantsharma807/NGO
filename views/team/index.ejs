@@ -40,7 +40,7 @@
                 </div>
                   <a class="btn btn-xs btn-warning" 
                      href="team/<%=item._id %>/edit">Edit</a>
-                  <form class="delete-form" action="/team/<%=item._id %>?_method=DELETE" method="POST">
+                  <form class="delete-form" action="/team/delete-member/<%=item._id %>?_method=DELETE" method="POST">
                       <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                   </form>
             </div>

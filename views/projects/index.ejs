@@ -4,9 +4,11 @@
      <header class="jumbotron">
          <div class="container">
              <h1>Welcome To Our Projects Page!!</h1>
+             <% if(currentUser && currentUser.isAdmin){ %>
              <p>
                 <a class="btn btn-primary btn-large" href="/projects/new">Add New Project</a>
              </p>
+             <% } %>
          </div>
      </header>
      

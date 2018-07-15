@@ -20,7 +20,7 @@ router.get("/", function(req, res){
 
 // POST a New Blog Route
 
-router.post("/", middleware.isLoggedIn ,function(req, res){
+router.post("/", middleware.isAdmin ,function(req, res){
     var name = req.body.name;
     var desc = req.body.description;
     var author = {
@@ -58,7 +58,7 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
 
 // NEW Blog Form
 
-router.get("/new", middleware.isLoggedIn ,function(req, res){
+router.get("/new", middleware.isAdmin ,function(req, res){
     res.render("blogs/new");
 });
 
@@ -80,7 +80,7 @@ router.get("/:id", function(req, res){
 
 // EDIT Blog Form
 
-router.get("/:id/edit", middleware.checkBlogOwnership, function(req, res) {
+router.get("/:id/edit", middleware.isAdmin, function(req, res) {
     Blog.findById(req.params.id, function(err, foundBlog){
         if(err){
             req.flash("error", err.message);
@@ -92,7 +92,7 @@ router.get("/:id/edit", middleware.checkBlogOwnership, function(req, res) {
 
 // PUT Request for Updating a Blog
 
-router.put("/:id", middleware.checkBlogOwnership ,function(req, res){
+router.put("/:id", middleware.isAdmin ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
     
     var name = req.body.name;
@@ -144,7 +144,7 @@ router.put("/:id", middleware.checkBlogOwnership ,function(req, res){
 
 // DELETE a Blog
 
-router.delete('/delete-blog/:id', function (req, res) {
+router.delete('/delete-blog/:id', middleware.isAdmin ,function (req, res) {
     var id = req.params.id;
     var path = 'public/blog_images/' + id;
 

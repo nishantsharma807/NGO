@@ -4,9 +4,11 @@
      <header class="jumbotron">
          <div class="container">
              <h1>Welcome To Our Blogs Page!!</h1>
+             <% if(currentUser && currentUser.isAdmin){ %>
              <p>
                 <a class="btn btn-primary btn-large" href="/blogs/new">Add New Blog</a>
              </p>
+             <% } %>
          </div>
      </header>
      

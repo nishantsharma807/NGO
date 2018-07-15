@@ -10,7 +10,9 @@
                 difference in the lives of people, who deserve to be happy, educated,
                 working and live with dignity. Through our projects we work for
                 creating a meaningful impact.</p>
+                <% if(currentUser && currentUser.isAdmin){ %>
                 <a class="btn btn-primary btn-large" href="/team/new">Add New Member</a>
+                <% } %>
              </p>
          </div>
      </header>
@@ -38,11 +40,12 @@
                        <%= item.description %>
                     </p>
                 </div>
-                  <a class="btn btn-xs btn-warning" 
-                     href="team/<%=item._id %>/edit">Edit</a>
+                <% if(currentUser && currentUser.isAdmin){ %>
+                  <a class="btn btn-xs btn-warning" href="team/<%=item._id %>/edit">Edit</a>
                   <form class="delete-form" action="/team/delete-member/<%=item._id %>?_method=DELETE" method="POST">
                       <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                   </form>
+                <% } %>  
             </div>
         <% }); %>
     </div>

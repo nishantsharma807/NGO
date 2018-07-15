@@ -21,7 +21,7 @@ router.get("/", function(req, res){
 
 // POST Route for new Project
 
-router.post("/", middleware.isLoggedIn ,function(req, res){
+router.post("/", middleware.isAdmin ,function(req, res){
     var name = req.body.name;
     var duration = req.body.duration;
     var desc = req.body.description;
@@ -68,7 +68,7 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
 
 // GET a New Project Form
 
-router.get("/new", middleware.isLoggedIn ,function(req, res){
+router.get("/new", middleware.isAdmin ,function(req, res){
     res.render("projects/new");
 });
 
@@ -100,7 +100,7 @@ router.get("/:id", function(req, res){
 
 // GET Edit Project Form
 
-router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
+router.get("/:id/edit", middleware.isAdmin, function(req, res) {
     Projects.findById(req.params.id, function(err, foundProject){
         if(err){
             console.log(err);
@@ -125,7 +125,7 @@ router.get("/:id/edit", middleware.checkProjectOwnership, function(req, res) {
 /*
  * POST Route for Project Gallery Images
  */
-router.post('/:id/gallery', function (req, res) {
+router.post('/:id/gallery', middleware.isAdmin ,function (req, res) {
 
     var projectImage = req.files.file;
     var id = req.params.id;
@@ -148,7 +148,7 @@ router.post('/:id/gallery', function (req, res) {
 
 // PUT Request for Editing a Project
 
-router.put("/:id", middleware.checkProjectOwnership ,function(req, res){
+router.put("/:id", middleware.isAdmin ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
     
     var name = req.body.name;
@@ -203,7 +203,7 @@ router.put("/:id", middleware.checkProjectOwnership ,function(req, res){
 /*
  * DELETE Project Gallery Image
  */
-router.get('/delete-image/:image', function (req, res) {
+router.get('/delete-image/:image', middleware.isAdmin ,function (req, res) {
 
     var originalImage = 'public/project_images/' + req.query.id + '/gallery/' + req.params.image;
     var thumbImage = 'public/project_images/' + req.query.id + '/gallery/thumbs/' + req.params.image;
@@ -226,7 +226,7 @@ router.get('/delete-image/:image', function (req, res) {
 
 // Delete Entire Project
 
-router.delete('/delete-project/:id', function (req, res) {
+router.delete('/delete-project/:id', middleware.isAdmin ,function (req, res) {
 
     var id = req.params.id;
     var path = 'public/project_images/' + id;

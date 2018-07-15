@@ -20,7 +20,7 @@ router.get("/", function(req, res){
 
 // POST a New Team Member
 
-router.post("/", middleware.isLoggedIn ,function(req, res){
+router.post("/", middleware.isAdmin ,function(req, res){
     var name = req.body.name;
     var title = req.body.title;
     var desc = req.body.description;
@@ -59,13 +59,13 @@ router.post("/", middleware.isLoggedIn ,function(req, res){
 
 // NEW Team Member Form
 
-router.get("/new", middleware.isLoggedIn ,function(req, res){
+router.get("/new", middleware.isAdmin ,function(req, res){
     res.render("team/new");
 });
 
 // EDIT a Team Member Form
 
-router.get("/:id/edit", middleware.checkMemberOwnership, function(req, res) {
+router.get("/:id/edit", middleware.isAdmin, function(req, res) {
     Member.findById(req.params.id, function(err, foundMember){
         if(err){
             req.flash("error", err);
@@ -77,7 +77,7 @@ router.get("/:id/edit", middleware.checkMemberOwnership, function(req, res) {
 
 // PUT Request for Updating a Team Member
 
-router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
+router.put("/:id", middleware.isAdmin ,function(req, res){
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
     
     var name = req.body.name;
@@ -129,7 +129,7 @@ router.put("/:id", middleware.checkMemberOwnership ,function(req, res){
 
 //DELETE a Team Member
 
-router.delete('/delete-member/:id', function (req, res) {
+router.delete('/delete-member/:id', middleware.isAdmin ,function (req, res) {
 
     var id = req.params.id;
     var path = 'public/member_images/' + id;
